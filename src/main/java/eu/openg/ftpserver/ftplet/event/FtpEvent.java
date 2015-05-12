@@ -16,11 +16,24 @@
 
 package eu.openg.ftpserver.ftplet.event;
 
+import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 
 public class FtpEvent {
 
+    private final FtpSession session;
+    private final FtpRequest request;
+
+    public FtpEvent(FtpSession session, FtpRequest request) {
+        this.session = session;
+        this.request = request;
+    }
+
     public FtpSession getSession() {
-        return null;
+        return session;
+    }
+
+    public FtpRequest getRequest() {
+        return request;
     }
 }
