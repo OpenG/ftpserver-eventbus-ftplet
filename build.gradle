@@ -1,5 +1,7 @@
 description = "FtpServer EventBus Ftplet"
 
+version = "0.1"
+
 apply plugin: "java"
 
 repositories {
