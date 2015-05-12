@@ -19,6 +19,8 @@ package eu.openg.ftpserver.ftplet.event;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 
+import java.util.Objects;
+
 public class FtpEvent {
 
     private final FtpSession session;
@@ -35,5 +37,14 @@ public class FtpEvent {
 
     public FtpRequest getRequest() {
         return request;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FtpEvent event = (FtpEvent) o;
+        return Objects.equals(session, event.session) &&
+                Objects.equals(request, event.request);
     }
 }

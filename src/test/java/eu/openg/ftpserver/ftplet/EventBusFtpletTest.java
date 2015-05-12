@@ -16,17 +16,36 @@
 
 package eu.openg.ftpserver.ftplet;
 
+import eu.openg.ftpserver.FtpServerEventBus;
+import eu.openg.ftpserver.ftplet.event.FtpEvent;
+import org.apache.ftpserver.ftplet.FtpException;
+import org.apache.ftpserver.ftplet.FtpRequest;
+import org.apache.ftpserver.ftplet.FtpSession;
 import org.apache.ftpserver.ftplet.Ftplet;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class EventBusFtpletTest {
 
     @Test
     public void shouldImplementFtplet() {
-        assertThat(new EventBusFtplet(), is(instanceOf(Ftplet.class)));
+        assertThat(new EventBusFtplet(null), is(instanceOf(Ftplet.class)));
+    }
+
+    @Test
+    public void onUploadEndShouldPublishUploadEndEvent() throws FtpException, IOException {
+        FtpSession session = mock(FtpSession.class);
+        FtpRequest request = mock(FtpRequest.class);
+        FtpServerEventBus eventBus = mock(FtpServerEventBus.class);
+        final EventBusFtplet ftplet = new EventBusFtplet(eventBus);
+        ftplet.onUploadEnd(session, request);
+        verify(eventBus).publish(new FtpEvent(session, request));
     }
 }
