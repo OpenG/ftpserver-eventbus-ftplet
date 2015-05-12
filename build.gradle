@@ -1,1 +1,12 @@
 description = "FtpServer EventBus Ftplet"
+
+apply plugin: "java"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.apache.ftpserver:ftplet-api:1.0.6"
+    testCompile "junit:junit:4.12"
+}

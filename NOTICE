@@ -1,0 +1,5 @@
+FtpServer EventBus Ftplet
+Copyright 2015 OpenG (Atvira Karta, LLC)
+
+This product makes use of Apache FtpServer Ftplet API, which is developed at
+The Apache Software Foundation (http://www.apache.org/).
