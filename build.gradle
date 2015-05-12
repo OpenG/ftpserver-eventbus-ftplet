@@ -7,7 +7,10 @@ repositories {
 }
 
 dependencies {
-    compile "org.apache.ftpserver:ftplet-api:1.0.6"
+
+    compile "org.apache.ftpserver:ftplet-api:1.0.6",
+            "com.google.guava:guava:18.0"
+
     testCompile "junit:junit:4.12",
             "org.mockito:mockito-core:1.10.19"
 }
