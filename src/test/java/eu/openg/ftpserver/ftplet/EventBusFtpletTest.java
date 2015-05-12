@@ -17,11 +17,13 @@
 package eu.openg.ftpserver.ftplet;
 
 import eu.openg.ftpserver.FtpServerEventBus;
-import eu.openg.ftpserver.ftplet.event.FtpEvent;
+import eu.openg.ftpserver.ftplet.event.RenameEndEvent;
+import eu.openg.ftpserver.ftplet.event.UploadEndEvent;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 import org.apache.ftpserver.ftplet.Ftplet;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -34,6 +36,19 @@ import static org.mockito.Mockito.verify;
 
 public class EventBusFtpletTest {
 
+    private FtpSession session;
+    private FtpRequest request;
+    private FtpServerEventBus eventBus;
+    private EventBusFtplet ftplet;
+
+    @Before
+    public void setUp() throws Exception {
+        session = mock(FtpSession.class);
+        request = mock(FtpRequest.class);
+        eventBus = mock(FtpServerEventBus.class);
+        ftplet = new EventBusFtplet(eventBus);
+    }
+
     @Test
     public void shouldImplementFtplet() {
         assertThat(new EventBusFtplet(null), is(instanceOf(Ftplet.class)));
@@ -41,11 +56,13 @@ public class EventBusFtpletTest {
 
     @Test
     public void onUploadEndShouldPublishUploadEndEvent() throws FtpException, IOException {
-        FtpSession session = mock(FtpSession.class);
-        FtpRequest request = mock(FtpRequest.class);
-        FtpServerEventBus eventBus = mock(FtpServerEventBus.class);
-        final EventBusFtplet ftplet = new EventBusFtplet(eventBus);
         ftplet.onUploadEnd(session, request);
-        verify(eventBus).publish(new FtpEvent(session, request));
+        verify(eventBus).publish(new UploadEndEvent(session, request));
+    }
+
+    @Test
+    public void onRenameEndShouldPublishRenameEndEvent() throws FtpException, IOException {
+        ftplet.onRenameEnd(session, request);
+        verify(eventBus).publish(new RenameEndEvent(session, request));
     }
 }

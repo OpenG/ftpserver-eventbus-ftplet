@@ -29,9 +29,16 @@ import static org.mockito.Mockito.mock;
 public class FtpEventTest {
 
     @Test
+    public void eventsShouldExtentFtpEvent() {
+        assertThat(new RenameEndEvent(null, null), is(instanceOf(FtpEvent.class)));
+        assertThat(new UploadEndEvent(null, null), is(instanceOf(FtpEvent.class)));
+    }
+
+    @Test
     public void shouldHaveASession() {
         FtpSession session = mock(FtpSession.class);
-        final FtpEvent event = new FtpEvent(session, null);
+        final FtpEvent event = new FtpEvent(session, null) {
+        };
         assertThat(event.getSession(), is(instanceOf(FtpSession.class)));
         assertThat(event.getSession(), is(equalTo(session)));
     }
@@ -39,7 +46,8 @@ public class FtpEventTest {
     @Test
     public void shouldHaveARequest() {
         FtpRequest request = mock(FtpRequest.class);
-        final FtpEvent event = new FtpEvent(null, request);
+        final FtpEvent event = new FtpEvent(null, request) {
+        };
         assertThat(event.getRequest(), is(instanceOf(FtpRequest.class)));
         assertThat(event.getRequest(), is(equalTo(request)));
     }

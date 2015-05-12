@@ -17,7 +17,8 @@
 package eu.openg.ftpserver.ftplet;
 
 import eu.openg.ftpserver.FtpServerEventBus;
-import eu.openg.ftpserver.ftplet.event.FtpEvent;
+import eu.openg.ftpserver.ftplet.event.RenameEndEvent;
+import eu.openg.ftpserver.ftplet.event.UploadEndEvent;
 import org.apache.ftpserver.ftplet.*;
 
 import java.io.IOException;
@@ -34,7 +35,13 @@ public class EventBusFtplet extends DefaultFtplet {
 
     @Override
     public FtpletResult onUploadEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
-        eventBus.publish(new FtpEvent(session, request));
+        eventBus.publish(new UploadEndEvent(session, request));
+        return DEFAULT;
+    }
+
+    @Override
+    public FtpletResult onRenameEnd(FtpSession session, FtpRequest request) throws FtpException, IOException {
+        eventBus.publish(new RenameEndEvent(session, request));
         return DEFAULT;
     }
 }
