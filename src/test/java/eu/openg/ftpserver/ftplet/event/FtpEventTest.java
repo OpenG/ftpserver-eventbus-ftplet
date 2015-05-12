@@ -16,15 +16,39 @@
 
 package eu.openg.ftpserver.ftplet.event;
 
+import org.apache.ftpserver.ftplet.FtpRequest;
+import org.apache.ftpserver.ftplet.FtpSession;
 import org.junit.Test;
 
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class FtpEventTest {
 
     @Test
+    public void eventsShouldExtentFtpEvent() {
+        assertThat(new RenameEndEvent(null, null), is(instanceOf(FtpEvent.class)));
+        assertThat(new UploadEndEvent(null, null), is(instanceOf(FtpEvent.class)));
+    }
+
+    @Test
     public void shouldHaveASession() {
-        assertThat(new FtpEvent().getSession(), equalTo(null));
+        FtpSession session = mock(FtpSession.class);
+        final FtpEvent event = new FtpEvent(session, null) {
+        };
+        assertThat(event.getSession(), is(instanceOf(FtpSession.class)));
+        assertThat(event.getSession(), is(equalTo(session)));
+    }
+
+    @Test
+    public void shouldHaveARequest() {
+        FtpRequest request = mock(FtpRequest.class);
+        final FtpEvent event = new FtpEvent(null, request) {
+        };
+        assertThat(event.getRequest(), is(instanceOf(FtpRequest.class)));
+        assertThat(event.getRequest(), is(equalTo(request)));
     }
 }

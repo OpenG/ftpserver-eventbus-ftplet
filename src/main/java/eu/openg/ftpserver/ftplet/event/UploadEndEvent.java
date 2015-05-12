@@ -19,32 +19,9 @@ package eu.openg.ftpserver.ftplet.event;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
 
-import java.util.Objects;
-
-public abstract class FtpEvent {
-
-    private final FtpSession session;
-    private final FtpRequest request;
-
-    public FtpEvent(FtpSession session, FtpRequest request) {
-        this.session = session;
-        this.request = request;
-    }
-
-    public FtpSession getSession() {
-        return session;
-    }
-
-    public FtpRequest getRequest() {
-        return request;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FtpEvent event = (FtpEvent) o;
-        return Objects.equals(session, event.session) &&
-                Objects.equals(request, event.request);
+public class UploadEndEvent extends FtpEvent {
+    
+    public UploadEndEvent(FtpSession session, FtpRequest request) {
+        super(session, request);
     }
 }
