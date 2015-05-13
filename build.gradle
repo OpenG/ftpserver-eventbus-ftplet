@@ -1,6 +1,6 @@
 description = "FtpServer EventBus Ftplet"
 
-version = "0.2"
+version = "0.2-SNAPSHOT"
 
 apply plugin: "java"
 
